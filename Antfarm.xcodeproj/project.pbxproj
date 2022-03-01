@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F337B2A27CEAF2700D2903F /* Ant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F337B2927CEAF2700D2903F /* Ant.swift */; };
 		0F6151DC27CEA79800216BF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6151DB27CEA79800216BF8 /* AppDelegate.swift */; };
 		0F6151DE27CEA79800216BF8 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F6151DD27CEA79800216BF8 /* GameScene.sks */; };
 		0F6151E027CEA79800216BF8 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0F6151DF27CEA79800216BF8 /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F337B2927CEAF2700D2903F /* Ant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ant.swift; sourceTree = "<group>"; };
 		0F6151D827CEA79800216BF8 /* Antfarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Antfarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F6151DB27CEA79800216BF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F6151DD27CEA79800216BF8 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -78,6 +80,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F337B2827CEAF1100D2903F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0F337B2927CEAF2700D2903F /* Ant.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		0F6151CF27CEA79700216BF8 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +111,7 @@
 		0F6151DA27CEA79800216BF8 /* Antfarm */ = {
 			isa = PBXGroup;
 			children = (
+				0F337B2827CEAF1100D2903F /* Classes */,
 				0F6151DB27CEA79800216BF8 /* AppDelegate.swift */,
 				0F6151DD27CEA79800216BF8 /* GameScene.sks */,
 				0F6151DF27CEA79800216BF8 /* Actions.sks */,
@@ -265,6 +276,7 @@
 				0F6151E427CEA79800216BF8 /* ViewController.swift in Sources */,
 				0F6151E227CEA79800216BF8 /* GameScene.swift in Sources */,
 				0F6151DC27CEA79800216BF8 /* AppDelegate.swift in Sources */,
+				0F337B2A27CEAF2700D2903F /* Ant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
