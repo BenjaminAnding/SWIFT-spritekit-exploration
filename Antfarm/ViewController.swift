@@ -12,7 +12,7 @@ import GameplayKit
 class ViewController: NSViewController {
 
     @IBOutlet var skView: SKView!
-    
+    lazy var window: NSWindow = self.view.window!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,7 +25,6 @@ class ViewController: NSViewController {
                 // Present the scene
                 view.presentScene(scene)
             }
-            
             view.ignoresSiblingOrder = true
             
             view.showsFPS = true

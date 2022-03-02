@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import GameKit
 
 let dirmap: [String: CGPoint] = [  "ul": CGPoint(x: -1, y: 1),
                                    "uu": CGPoint(x: 0, y: 1),
@@ -26,10 +27,14 @@ class Ant {
     var id: UUID
     var dir: String
     var facing: CGPoint
+    var dest: CGPoint
+    var pathing: Bool
     init(xPos: CGFloat, yPos: CGFloat) {
         self.ant.position.x = xPos
         self.ant.position.y = yPos
+        self.dest = CGPoint(x: 0, y: 0)
         self.id = UUID.init()
+        self.pathing = false
         self.dir = "ul"
         self.facing = dirmap[self.dir]!
     }
@@ -43,9 +48,13 @@ class Ant {
     }
     
     func move() {
+        if self.isPathing() {
+            self.continuePathing()
+        }
         if (((-480 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 480)) && ((-160 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 160))) {
             self.ant.position = CGPoint(x: self.ant.position.x + facing.x, y: self.ant.position.y + facing.y)
         }
+
     }
     
     func getAnt() -> SKSpriteNode {
@@ -111,6 +120,37 @@ class Ant {
                 break
             default:
                 self.setDir(newDir: "nm")
+        }
+    }
+    
+    func isPathing() -> Bool {
+        return self.pathing
+    }
+    
+    func continuePathing() {
+        self.pathTo(newDest: dest)
+    }
+    
+    func pathTo(newDest: CGPoint) {
+        if self.ant.position != newDest {
+            self.pathing = false
+            self.dest = CGPoint(x: 0, y: 0)
+        }
+        else {
+            self.pathing = true
+            self.dest = newDest
+            if self.ant.position.x > dest.x {
+                self.facing.x = -1
+            }
+            if self.ant.position.x < dest.x {
+                self.facing.x = 1
+            }
+            if self.ant.position.y > dest.y {
+                self.facing.y = -1
+            }
+            if self.ant.position.y < dest.y {
+                self.facing.y = 1
+            }
         }
     }
     

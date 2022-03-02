@@ -6,33 +6,84 @@
 //
 
 import SpriteKit
+import GameKit
+
 
 class GameScene: SKScene {
-    
-    var ants: [Ant] = []
-    var ticker: Int = 0
-
-    
+    private var rect : SKShapeNode?
+    private var ants: [Ant] = []
+    private var selectedAnts: [Ant] = []
+    private var ticker: Int = 0
+    private var startRect = CGPoint (x: 0, y: 0)
+    private var endRect = CGPoint (x: 0, y: 0)
+    private var flag: Bool = false
     override func didMove(to view: SKView) {
         for _ in 0...10 {
             let newAnt = Ant(xPos: 0, yPos: 0)
             ants.append(newAnt)
         }
-        for ant in ants {
+        for ant in self.ants {
             self.addChild(ant.getAnt())
         }
     }
 
+    func touchDown(atPoint pos : CGPoint) {
+        self.startRect = pos
+    }
     
+    func touchUp(atPoint pos : CGPoint) {
+        self.endRect = pos
+        let w = (self.size.width + self.size.height) * 0.05
+        self.rect = SKShapeNode.init(rectOf: CGSize.init(width: endRect.x - startRect.x, height: endRect.y - startRect.y), cornerRadius: w * 0.3)
+        if let rect = self.rect {
+            rect.lineWidth = 2.5
+            
+            rect.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
+                                              SKAction.fadeOut(withDuration: 0.5),
+                                              SKAction.removeFromParent()]))
+        }
+        rect!.position = CGPoint(x: (self.endRect.x + self.startRect.x) / 2, y: (self.endRect.y + self.startRect.y) / 2)
+        self.addChild(rect!)
+        for ant in self.ants {
+            if ((ant.getAnt().position.x > self.startRect.x && ant.getAnt().position.x < self.endRect.x) && (ant.getAnt().position.y > self.startRect.y && ant.getAnt().position.y < self.endRect.y)) || ((ant.getAnt().position.x < self.startRect.x && ant.getAnt().position.x > self.endRect.x) && (ant.getAnt().position.y > self.startRect.y && ant.getAnt().position.y < self.endRect.y)) || ((ant.getAnt().position.x > self.endRect.x && ant.getAnt().position.x < self.startRect.x) && (ant.getAnt().position.y > self.endRect.y && ant.getAnt().position.y < self.startRect.y)) || ((ant.getAnt().position.x < self.endRect.x && ant.getAnt().position.x > self.startRect.x) && (ant.getAnt().position.y > self.endRect.y && ant.getAnt().position.y < self.startRect.y)) {
+                self.selectedAnts.append(ant)
+                ant.pathTo(newDest: endRect)
+            }
+        }
+        if flag {
+            flag = false
+            print(self.selectedAnts.count)
+        } else {
+            flag = true
+            print("SANITY")
+            print(self.selectedAnts.count)
+        }
+        
+    }
+    
+    override func mouseDown(with event: NSEvent) {
+        self.touchDown(atPoint: event.location(in: self))
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        self.touchUp(atPoint: event.location(in: self))
+        
+    }
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         ticker += 1
-        
-        for ant in ants {
+        for ant in self.ants {
             ant.move()
             if ticker % 10 == 0 {
-                ant.switchItUp()
-                ticker = 0
+                if ant.isPathing() {
+                    ticker = 0
+                }
+                else {
+                    ant.switchItUp()
+                    ticker = 0
+                }
+
+                    
             }
         }
     }
