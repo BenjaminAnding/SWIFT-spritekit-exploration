@@ -48,13 +48,9 @@ class Ant {
     }
     
     func move() {
-        if self.isPathing() {
-            self.continuePathing()
-        }
         if (((-480 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 480)) && ((-160 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 160))) {
             self.ant.position = CGPoint(x: self.ant.position.x + facing.x, y: self.ant.position.y + facing.y)
         }
-
     }
     
     func getAnt() -> SKSpriteNode {
@@ -132,9 +128,10 @@ class Ant {
     }
     
     func pathTo(newDest: CGPoint) {
-        if self.ant.position != newDest {
+        if (self.ant.position.x < newDest.x + 10 && self.ant.position.x > newDest.x - 10 && self.ant.position.y < newDest.y + 10 && self.ant.position.y > newDest.y - 10 )  {
             self.pathing = false
             self.dest = CGPoint(x: 0, y: 0)
+            self.switchItUp()
         }
         else {
             self.pathing = true

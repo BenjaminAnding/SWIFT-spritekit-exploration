@@ -26,6 +26,15 @@ class GameScene: SKScene {
             self.addChild(ant.getAnt())
         }
     }
+    
+    func rightTouchUp(atPoint pos : CGPoint) {
+        for ant in self.selectedAnts {
+            ant.pathTo(newDest: pos)
+            print(ant.id)
+            print(ant.dest)
+        }
+        self.selectedAnts = []
+    }
 
     func touchDown(atPoint pos : CGPoint) {
         self.startRect = pos
@@ -47,18 +56,8 @@ class GameScene: SKScene {
         for ant in self.ants {
             if ((ant.getAnt().position.x > self.startRect.x && ant.getAnt().position.x < self.endRect.x) && (ant.getAnt().position.y > self.startRect.y && ant.getAnt().position.y < self.endRect.y)) || ((ant.getAnt().position.x < self.startRect.x && ant.getAnt().position.x > self.endRect.x) && (ant.getAnt().position.y > self.startRect.y && ant.getAnt().position.y < self.endRect.y)) || ((ant.getAnt().position.x > self.endRect.x && ant.getAnt().position.x < self.startRect.x) && (ant.getAnt().position.y > self.endRect.y && ant.getAnt().position.y < self.startRect.y)) || ((ant.getAnt().position.x < self.endRect.x && ant.getAnt().position.x > self.startRect.x) && (ant.getAnt().position.y > self.endRect.y && ant.getAnt().position.y < self.startRect.y)) {
                 self.selectedAnts.append(ant)
-                ant.pathTo(newDest: endRect)
             }
         }
-        if flag {
-            flag = false
-            print(self.selectedAnts.count)
-        } else {
-            flag = true
-            print("SANITY")
-            print(self.selectedAnts.count)
-        }
-        
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -67,7 +66,10 @@ class GameScene: SKScene {
     
     override func mouseUp(with event: NSEvent) {
         self.touchUp(atPoint: event.location(in: self))
-        
+    }
+    
+    override func rightMouseUp(with event: NSEvent) {
+        self.rightTouchUp(atPoint: event.location(in: self))
     }
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
@@ -76,15 +78,15 @@ class GameScene: SKScene {
             ant.move()
             if ticker % 10 == 0 {
                 if ant.isPathing() {
-                    ticker = 0
+                    ant.continuePathing()
                 }
                 else {
                     ant.switchItUp()
-                    ticker = 0
                 }
-
-                    
             }
+        }
+        if ticker % 10 == 0 {
+            ticker = 0
         }
     }
 }
