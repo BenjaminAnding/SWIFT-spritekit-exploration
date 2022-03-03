@@ -8,7 +8,6 @@
 import SpriteKit
 import GameKit
 
-
 class GameScene: SKScene {
     private var rect : SKShapeNode?
     private var ants: [Ant] = []
@@ -18,7 +17,7 @@ class GameScene: SKScene {
     private var endRect = CGPoint (x: 0, y: 0)
     private var flag: Bool = false
     override func didMove(to view: SKView) {
-        for _ in 0...10 {
+        for _ in 0...100 {
             let newAnt = Ant(xPos: 0, yPos: 0)
             ants.append(newAnt)
         }
@@ -71,6 +70,7 @@ class GameScene: SKScene {
     override func rightMouseUp(with event: NSEvent) {
         self.rightTouchUp(atPoint: event.location(in: self))
     }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         ticker += 1
