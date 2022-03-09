@@ -9,6 +9,7 @@ import SpriteKit
 import GameKit
 
 class GameScene: SKScene {
+    private let queen = Ant(xPos: 0, yPos: 0, shape: "circle")
     private var rect : SKShapeNode?
     private var ants: [Ant] = []
     private var selectedAnts: [Ant] = []
@@ -18,7 +19,7 @@ class GameScene: SKScene {
     private var flag: Bool = false
     override func didMove(to view: SKView) {
         for _ in 0...100 {
-            let newAnt = Ant(xPos: 0, yPos: 0)
+            let newAnt = Ant(xPos: 0, yPos: 0, shape: "ant")
             ants.append(newAnt)
         }
         for ant in self.ants {

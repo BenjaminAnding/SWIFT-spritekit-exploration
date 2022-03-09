@@ -20,16 +20,15 @@ let dirmap: [String: CGPoint] = [  "ul": CGPoint(x: -1, y: 1),
                                    "ll": CGPoint(x: -1, y: 0)
                                 ]
 
-
-
 class Ant {
-    let ant = SKSpriteNode(imageNamed: "ant")
+    let ant: SKSpriteNode
     var id: UUID
     var dir: String
     var facing: CGPoint
     var dest: CGPoint
     var pathing: Bool
-    init(xPos: CGFloat, yPos: CGFloat) {
+    init(xPos: CGFloat, yPos: CGFloat, shape: String) {
+        self.ant = SKSpriteNode(imageNamed: shape)
         self.ant.position.x = xPos
         self.ant.position.y = yPos
         self.dest = CGPoint(x: 0, y: 0)

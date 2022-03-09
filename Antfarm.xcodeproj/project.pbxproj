@@ -18,6 +18,7 @@
 		0F6151F427CEA7A300216BF8 /* AntfarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6151F327CEA7A300216BF8 /* AntfarmTests.swift */; };
 		0F6151FE27CEA7A300216BF8 /* AntfarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6151FD27CEA7A300216BF8 /* AntfarmUITests.swift */; };
 		0F61520027CEA7A300216BF8 /* AntfarmUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6151FF27CEA7A300216BF8 /* AntfarmUITestsLaunchTests.swift */; };
+		0FF5AE7127D77CD200C6AEDD /* Q.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF5AE7027D77CD100C6AEDD /* Q.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		0F6151F927CEA7A300216BF8 /* AntfarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AntfarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F6151FD27CEA7A300216BF8 /* AntfarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntfarmUITests.swift; sourceTree = "<group>"; };
 		0F6151FF27CEA7A300216BF8 /* AntfarmUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntfarmUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0FF5AE7027D77CD100C6AEDD /* Q.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Q.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				0F337B2927CEAF2700D2903F /* Ant.swift */,
+				0FF5AE7027D77CD100C6AEDD /* Q.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 			files = (
 				0F6151E427CEA79800216BF8 /* ViewController.swift in Sources */,
 				0F6151E227CEA79800216BF8 /* GameScene.swift in Sources */,
+				0FF5AE7127D77CD200C6AEDD /* Q.swift in Sources */,
 				0F6151DC27CEA79800216BF8 /* AppDelegate.swift in Sources */,
 				0F337B2A27CEAF2700D2903F /* Ant.swift in Sources */,
 			);
