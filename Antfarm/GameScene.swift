@@ -68,8 +68,8 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        cameraNode.position = CGPoint(x: self.size.width / 2,
-                                      y: self.size.height / 2)
+        cameraNode.position = CGPoint(x: 0,
+                                      y: 0)
             
         self.addChild(cameraNode)
         self.camera = cameraNode
@@ -143,29 +143,32 @@ class GameScene: SKScene {
             }
         }
         if ticker % 10 == 0 {
+            print(cameraNode.position.x)
+            print(cameraNode.position.y)
             ticker = 0
         }
         if leftPressed {
-            cameraNode.position.x -= 10
+            cameraNode.position.x -= 10 * cameraNode.xScale
         }
         if rightPressed {
-            cameraNode.position.x += 10
+            cameraNode.position.x += 10 * cameraNode.yScale
         }
         if upPressed {
-            cameraNode.position.y += 10
+            cameraNode.position.y += 10 * cameraNode.yScale
         }
         if downPressed {
-            cameraNode.position.y -= 10
+            cameraNode.position.y -= 10 * cameraNode.yScale
         }
         if minusPressed {
-            cameraNode.xScale -= 0.01
-            cameraNode.yScale -= 0.01
-        }
-        if plusPressed {
             cameraNode.xScale += 0.01
             cameraNode.yScale += 0.01
         }
-        
+        if plusPressed {
+            if cameraNode.xScale > 0 && cameraNode.yScale > 0 {
+                cameraNode.xScale -= 0.01
+                cameraNode.yScale -= 0.01
+            }
+        }
     }
 }
 
