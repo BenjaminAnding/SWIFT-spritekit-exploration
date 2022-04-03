@@ -20,23 +20,38 @@ let dirmap: [String: CGPoint] = [  "ul": CGPoint(x: -1, y: 1),
                                    "ll": CGPoint(x: -1, y: 0)
                                 ]
 
-class Ant {
+class Ant: SKNode {
     let ant: SKSpriteNode
     var id: UUID
     var dir: String
     var facing: CGPoint
     var dest: CGPoint
     var pathing: Bool
-    init(xPos: CGFloat, yPos: CGFloat, shape: String) {
+    init(xPos: CGFloat, yPos: CGFloat, shape: String, color: SKColor) {
         self.ant = SKSpriteNode(imageNamed: shape)
         self.ant.position.x = xPos
         self.ant.position.y = yPos
+        self.ant.physicsBody = SKPhysicsBody(circleOfRadius: 8)
+        self.ant.color = color
+        if (self.ant.color == .red) {
+            self.ant.physicsBody?.contactTestBitMask = 0b01
+        }
+        else {
+            self.ant.physicsBody?.contactTestBitMask = 0b10
+        }
+        self.ant.colorBlendFactor = 0.5
         self.dest = CGPoint(x: 0, y: 0)
         self.id = UUID.init()
         self.pathing = false
         self.dir = "ul"
         self.facing = dirmap[self.dir]!
+        super.init()
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func getPos() -> CGPoint {
         return self.ant.position
     }

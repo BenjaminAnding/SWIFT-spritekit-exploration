@@ -9,8 +9,7 @@ import SpriteKit
 import GameKit
 import Carbon.HIToolbox
 
-class GameScene: SKScene {
-    private let queen = Ant(xPos: 0, yPos: 0, shape: "circle")
+class GameScene: SKScene, SKPhysicsContactDelegate {
     private var rect : SKShapeNode?
     private var ants: [Ant] = []
     private var selectedAnts: [Ant] = []
@@ -70,12 +69,15 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         cameraNode.position = CGPoint(x: 0,
                                       y: 0)
-            
+        self.physicsWorld.gravity = .zero
         self.addChild(cameraNode)
         self.camera = cameraNode
-        
-        for _ in 0...100 {
-            let newAnt = Ant(xPos: 0, yPos: 0, shape: "ant")
+        for _ in 0...25 {
+            let newAnt = Ant(xPos: -100, yPos: 0, shape: "ant", color: .green)
+            ants.append(newAnt)
+        }
+        for _ in 0...25 {
+            let newAnt = Ant(xPos: 100, yPos: 0, shape: "ant", color: .red)
             ants.append(newAnt)
         }
         for ant in self.ants {
@@ -83,11 +85,15 @@ class GameScene: SKScene {
         }
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        if let _ = contact.bodyA.node as? Ant, let enemy = contact.bodyB.node as? Ant {
+            enemy.ant.removeFromParent()
+        }
+    }
+    
     func rightTouchUp(atPoint pos : CGPoint) {
         for ant in self.selectedAnts {
             ant.pathTo(newDest: pos)
-            print(ant.id)
-            print(ant.dest)
         }
         self.selectedAnts = []
     }
@@ -143,8 +149,6 @@ class GameScene: SKScene {
             }
         }
         if ticker % 10 == 0 {
-            print(cameraNode.position.x)
-            print(cameraNode.position.y)
             ticker = 0
         }
         if leftPressed {
