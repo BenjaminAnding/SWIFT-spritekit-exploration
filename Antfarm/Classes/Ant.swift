@@ -47,7 +47,7 @@ class Ant {
     }
     
     func move() {
-        if (((-480 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 480)) && ((-160 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 160))) {
+        if (((-1000 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 1000)) && ((-1000 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 1000))) {
             self.ant.position = CGPoint(x: self.ant.position.x + facing.x, y: self.ant.position.y + facing.y)
         }
     }

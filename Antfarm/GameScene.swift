@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameKit
+import Carbon.HIToolbox
 
 class GameScene: SKScene {
     private let queen = Ant(xPos: 0, yPos: 0, shape: "circle")
@@ -17,7 +18,51 @@ class GameScene: SKScene {
     private var startRect = CGPoint (x: 0, y: 0)
     private var endRect = CGPoint (x: 0, y: 0)
     private var flag: Bool = false
+    var leftPressed = false
+    var rightPressed = false
+    var upPressed = false
+    var downPressed = false
+    
+    let cameraNode = SKCameraNode()
+    
+    
+    
+    override func keyDown(with event: NSEvent) {
+        switch Int(event.keyCode) {
+        case kVK_LeftArrow:
+            leftPressed = true
+        case kVK_RightArrow:
+            rightPressed = true
+        case kVK_UpArrow:
+            upPressed = true
+        case kVK_DownArrow:
+            downPressed = true
+        default:
+            break
+        }
+    }
+
+    override func keyUp(with event: NSEvent) {
+        switch Int(event.keyCode) {
+        case kVK_LeftArrow:
+            leftPressed = false
+        case kVK_RightArrow:
+            rightPressed = false
+        case kVK_UpArrow:
+            upPressed = false
+        case kVK_DownArrow:
+            downPressed = false
+        default:
+            break
+        }
+    }
+    
     override func didMove(to view: SKView) {
+        cameraNode.position = CGPoint(x: self.size.width / 2,
+                                      y: self.size.height / 2)
+            
+        self.addChild(cameraNode)
+        self.camera = cameraNode
         for _ in 0...100 {
             let newAnt = Ant(xPos: 0, yPos: 0, shape: "ant")
             ants.append(newAnt)
@@ -89,6 +134,18 @@ class GameScene: SKScene {
         if ticker % 10 == 0 {
             ticker = 0
         }
+        if leftPressed {
+                cameraNode.position.x -= 10
+            }
+            if rightPressed {
+                cameraNode.position.x += 10
+            }
+            if upPressed {
+                cameraNode.position.y += 10
+            }
+            if downPressed {
+                cameraNode.position.y -= 10
+            }
     }
 }
 
