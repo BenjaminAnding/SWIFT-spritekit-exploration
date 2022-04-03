@@ -22,6 +22,8 @@ class GameScene: SKScene {
     var rightPressed = false
     var upPressed = false
     var downPressed = false
+    var plusPressed = false
+    var minusPressed = false
     
     let cameraNode = SKCameraNode()
     
@@ -37,6 +39,10 @@ class GameScene: SKScene {
             upPressed = true
         case kVK_DownArrow:
             downPressed = true
+        case kVK_ANSI_Minus:
+            minusPressed = true
+        case kVK_ANSI_Equal:
+            plusPressed = true
         default:
             break
         }
@@ -52,6 +58,10 @@ class GameScene: SKScene {
             upPressed = false
         case kVK_DownArrow:
             downPressed = false
+        case kVK_ANSI_Minus:
+            minusPressed = false
+        case kVK_ANSI_Equal:
+            plusPressed = false
         default:
             break
         }
@@ -63,6 +73,7 @@ class GameScene: SKScene {
             
         self.addChild(cameraNode)
         self.camera = cameraNode
+        
         for _ in 0...100 {
             let newAnt = Ant(xPos: 0, yPos: 0, shape: "ant")
             ants.append(newAnt)
@@ -135,17 +146,26 @@ class GameScene: SKScene {
             ticker = 0
         }
         if leftPressed {
-                cameraNode.position.x -= 10
-            }
-            if rightPressed {
-                cameraNode.position.x += 10
-            }
-            if upPressed {
-                cameraNode.position.y += 10
-            }
-            if downPressed {
-                cameraNode.position.y -= 10
-            }
+            cameraNode.position.x -= 10
+        }
+        if rightPressed {
+            cameraNode.position.x += 10
+        }
+        if upPressed {
+            cameraNode.position.y += 10
+        }
+        if downPressed {
+            cameraNode.position.y -= 10
+        }
+        if minusPressed {
+            cameraNode.xScale -= 0.01
+            cameraNode.yScale -= 0.01
+        }
+        if plusPressed {
+            cameraNode.xScale += 0.01
+            cameraNode.yScale += 0.01
+        }
+        
     }
 }
 
