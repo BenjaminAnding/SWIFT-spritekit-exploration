@@ -70,6 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cameraNode.position = CGPoint(x: 0,
                                       y: 0)
         self.physicsWorld.gravity = .zero
+        self.physicsWorld.contactDelegate = self
         self.addChild(cameraNode)
         self.camera = cameraNode
         for _ in 0...25 {
@@ -86,9 +87,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        if let _ = contact.bodyA.node as? Ant, let enemy = contact.bodyB.node as? Ant {
-            enemy.ant.removeFromParent()
-        }
+        let instigator = contact.bodyA.node as? Ant
+        let enemy = contact.bodyB.node as? Ant
+        print(enemy?.id as Any)
+        print(instigator?.id as Any)
+            if (instigator?.physicsBody?.contactTestBitMask != enemy?.physicsBody?.contactTestBitMask) {
+                instigator?.die()
+                print("OOF")
+            }
     }
     
     func rightTouchUp(atPoint pos : CGPoint) {

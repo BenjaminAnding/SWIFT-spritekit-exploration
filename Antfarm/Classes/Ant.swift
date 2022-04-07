@@ -52,6 +52,20 @@ class Ant: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        print(contact)
+        if let _ = contact.bodyA.node as? Ant, let enemy = contact.bodyB.node as? Ant {
+            if (contact.bodyA.contactTestBitMask != contact.bodyB.contactTestBitMask) {
+                enemy.die()
+                print("OOF")
+            }
+        }
+    }
+    
+    func die() {
+        self.removeFromParent()
+    }
+    
     func getPos() -> CGPoint {
         return self.ant.position
     }
