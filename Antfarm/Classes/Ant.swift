@@ -53,8 +53,8 @@ class Ant: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func die() {
-        let random = Int(arc4random() % 2)
+    func die(mod: UInt32) {
+        let random = Int(arc4random() % mod)
         if random == 0 {
             self.ant.removeFromParent()
         }

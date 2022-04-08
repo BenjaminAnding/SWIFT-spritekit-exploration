@@ -90,8 +90,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let antA = getAntByName(name: (contact.bodyA.node?.name)!)
         let antB = getAntByName(name: (contact.bodyB.node?.name)!)
         if antA?.ant.color != antB?.ant.color {
-            antA?.die()
-            antB?.die()
+            antA?.die(mod: 2)
+            antB?.die(mod: 2)
         }
         
     }
