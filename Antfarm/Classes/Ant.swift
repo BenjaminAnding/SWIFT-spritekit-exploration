@@ -42,6 +42,7 @@ class Ant: SKNode {
         self.ant.colorBlendFactor = 0.5
         self.dest = CGPoint(x: 0, y: 0)
         self.id = UUID.init()
+        self.ant.name = self.id.uuidString
         self.pathing = false
         self.dir = "ul"
         self.facing = dirmap[self.dir]!
@@ -52,18 +53,11 @@ class Ant: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func didBegin(_ contact: SKPhysicsContact) {
-        print(contact)
-        if let _ = contact.bodyA.node as? Ant, let enemy = contact.bodyB.node as? Ant {
-            if (contact.bodyA.contactTestBitMask != contact.bodyB.contactTestBitMask) {
-                enemy.die()
-                print("OOF")
-            }
-        }
-    }
-    
     func die() {
-        self.removeFromParent()
+        let random = Int(arc4random() % 2)
+        if random == 0 {
+            self.ant.removeFromParent()
+        }
     }
     
     func getPos() -> CGPoint {

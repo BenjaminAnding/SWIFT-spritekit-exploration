@@ -87,14 +87,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        let instigator = contact.bodyA.node as? Ant
-        let enemy = contact.bodyB.node as? Ant
-        print(enemy?.id as Any)
-        print(instigator?.id as Any)
-            if (instigator?.physicsBody?.contactTestBitMask != enemy?.physicsBody?.contactTestBitMask) {
-                instigator?.die()
-                print("OOF")
+        let antA = getAntByName(name: (contact.bodyA.node?.name)!)
+        let antB = getAntByName(name: (contact.bodyB.node?.name)!)
+        if antA?.ant.color != antB?.ant.color {
+            antA?.die()
+            antB?.die()
+        }
+        
+    }
+    
+    func getAntByName(name: String) -> Ant? {
+        for ant in ants {
+            if ant.ant.name == name {
+                return ant
             }
+        }
+        return nil
     }
     
     func rightTouchUp(atPoint pos : CGPoint) {
