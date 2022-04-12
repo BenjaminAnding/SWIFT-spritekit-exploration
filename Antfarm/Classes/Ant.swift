@@ -47,6 +47,10 @@ class Ant: SKNode {
         self.miniant.position.y = yPos - 390
         self.miniant.xScale = self.ant.xScale * 0.7
         self.miniant.yScale = self.ant.yScale * 0.7
+        self.miniant.physicsBody = SKPhysicsBody(circleOfRadius: 8)
+        self.miniant.color = color
+        self.miniant.physicsBody?.contactTestBitMask = UInt32(color.hashValue)
+        self.miniant.colorBlendFactor = 0.5
         super.init()
         self.switchItUp()
     }
@@ -77,10 +81,9 @@ class Ant: SKNode {
     }
     
     func move() {
-        
-        if (((-1000 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 1000)) && ((-1000 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 1000))) {
+        if (((-1000 < self.ant.position.x + facing.x) && ((self.ant.position.x + facing.x) < 1000)) && ((-1000 < self.ant.position.y + facing.y) && ((self.ant.position.y + facing.y) < 1000))) {
             self.ant.position = CGPoint(x: self.ant.position.x + facing.x, y: self.ant.position.y + facing.y)
-            self.miniant.position = CGPoint(x: self.miniant.position.x - 360, y: self.miniant.position.y - 390)
+            self.miniant.position = CGPoint(x: self.miniant.position.x + facing.x , y: self.miniant.position.y + facing.y)
         }
     }
     
