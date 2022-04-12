@@ -17,6 +17,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var startRect = CGPoint (x: 0, y: 0)
     private var endRect = CGPoint (x: 0, y: 0)
     private var flag: Bool = false
+    let border = SKSpriteNode(imageNamed: "border")
+    let minimap = SKSpriteNode(imageNamed: "border")
     var leftPressed = false
     var rightPressed = false
     var upPressed = false
@@ -66,23 +68,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func spawnAnt(xPos: CGFloat, yPos: CGFloat, shape: String, color: NSColor) -> Ant {
+        return Ant(xPos: xPos, yPos: yPos, shape: shape, color: color)
+    }
+    
     override func didMove(to view: SKView) {
-        cameraNode.position = CGPoint(x: 0,
-                                      y: 0)
+        border.position = CGPoint(x: 0, y: 100)
+        border.color = .blue
+        border.colorBlendFactor = 0.8
+        border.size.width = 1000
+        border.size.height = 500
+        
+        minimap.position = CGPoint(x: -360, y: -390)
+        minimap.size.width = 300
+        minimap.size.height = 150
+        minimap.color = .blue
+        minimap.colorBlendFactor = 0.8
+        
+        
+        cameraNode.position = CGPoint(x: 0, y: 0)
         self.physicsWorld.gravity = .zero
         self.physicsWorld.contactDelegate = self
         self.addChild(cameraNode)
+        cameraNode.addChild(border)
+        border.addChild(minimap)
         self.camera = cameraNode
+        
         for _ in 0...25 {
-            let newAnt = Ant(xPos: -100, yPos: 0, shape: "ant", color: .green)
-            ants.append(newAnt)
+            ants.append(spawnAnt(xPos: -100, yPos: 0, shape: "ant", color: .green))
         }
         for _ in 0...25 {
-            let newAnt = Ant(xPos: 100, yPos: 0, shape: "ant", color: .red)
-            ants.append(newAnt)
+            ants.append(spawnAnt(xPos: 100, yPos: 0, shape: "ant", color: .red))
+        }
+        
+        for _ in 0...25 {
+            ants.append(spawnAnt(xPos: 0, yPos: 100, shape: "ant", color: .yellow))
         }
         for ant in self.ants {
             self.addChild(ant.getAnt())
+            border.addChild(ant.miniant)
         }
     }
     
@@ -93,7 +117,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             antA?.die(mod: 2)
             antB?.die(mod: 2)
         }
-        
     }
     
     func getAntByName(name: String) -> Ant? {
@@ -158,7 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     ant.continuePathing()
                 }
                 else {
-                    ant.switchItUp()
+                    ant.setDir(newDir: "nm")
                 }
             }
         }
@@ -169,7 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cameraNode.position.x -= 10 * cameraNode.xScale
         }
         if rightPressed {
-            cameraNode.position.x += 10 * cameraNode.yScale
+            cameraNode.position.x += 10 * cameraNode.xScale
         }
         if upPressed {
             cameraNode.position.y += 10 * cameraNode.yScale
@@ -182,7 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             cameraNode.yScale += 0.01
         }
         if plusPressed {
-            if cameraNode.xScale > 0 && cameraNode.yScale > 0 {
+            if cameraNode.xScale > 0.01 && cameraNode.yScale > 0 {
                 cameraNode.xScale -= 0.01
                 cameraNode.yScale -= 0.01
             }

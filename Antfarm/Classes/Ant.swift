@@ -22,6 +22,7 @@ let dirmap: [String: CGPoint] = [  "ul": CGPoint(x: -1, y: 1),
 
 class Ant: SKNode {
     let ant: SKSpriteNode
+    let miniant: SKSpriteNode
     var id: UUID
     var dir: String
     var facing: CGPoint
@@ -39,9 +40,15 @@ class Ant: SKNode {
         self.id = UUID.init()
         self.ant.name = self.id.uuidString
         self.pathing = false
-        self.dir = "ul"
+        self.dir = "nm"
         self.facing = dirmap[self.dir]!
+        self.miniant = SKSpriteNode(imageNamed: shape)
+        self.miniant.position.x = xPos - 360
+        self.miniant.position.y = yPos - 390
+        self.miniant.xScale = self.ant.xScale * 0.7
+        self.miniant.yScale = self.ant.yScale * 0.7
         super.init()
+        self.switchItUp()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,11 +59,16 @@ class Ant: SKNode {
         let random = Int(arc4random() % mod)
         if random == 0 {
             self.ant.removeFromParent()
+            self.miniant.removeFromParent()
         }
     }
     
     func getPos() -> CGPoint {
         return self.ant.position
+    }
+    
+    func getMiniPos() -> CGPoint {
+        return self.miniant.position
     }
     
     func setDir(newDir: String) {
@@ -65,8 +77,10 @@ class Ant: SKNode {
     }
     
     func move() {
+        
         if (((-1000 < self.ant.position.x + facing.x) && (self.ant.position.x + facing.x < 1000)) && ((-1000 < self.ant.position.y + facing.y) && (self.ant.position.y + facing.y < 1000))) {
             self.ant.position = CGPoint(x: self.ant.position.x + facing.x, y: self.ant.position.y + facing.y)
+            self.miniant.position = CGPoint(x: self.miniant.position.x - 360, y: self.miniant.position.y - 390)
         }
     }
     
