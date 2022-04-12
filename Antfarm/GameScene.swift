@@ -100,13 +100,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for _ in 0...25 {
             ants.append(spawnAnt(xPos: 100, yPos: 0, shape: "ant", color: .red))
         }
-        
+
         for _ in 0...25 {
             ants.append(spawnAnt(xPos: 0, yPos: 100, shape: "ant", color: .yellow))
         }
+        
         for ant in self.ants {
             self.addChild(ant.getAnt())
-            border.addChild(ant.miniant)
         }
     }
     
